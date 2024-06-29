@@ -15,6 +15,11 @@ html, body {
     background: #000000;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 code {
     font-family: "Source Code Pro", sans-serif;
 }
@@ -65,8 +70,9 @@ header {
     font-size: 17px;
     border-radius: 10px;
     padding: 2% 3%;
-    height: calc(100vh - 50%);
-    overflow: scroll;
+    height: 100vh;
+    margin-bottom: 10%;
+    overflow: auto;
 }
 
 div#home {
@@ -118,6 +124,5 @@ a:hover, .category:hover {
 
     #textbox {
         width: 90%;
-        height: calc(100vh - 55%);
     }
 }
