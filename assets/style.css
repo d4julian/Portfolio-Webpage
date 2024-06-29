@@ -89,6 +89,16 @@ div#home {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
+
+.content {
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+}
+
+.content.active {
+    opacity: 1;
+}
+
 a:link, .category:link, a:visited, .category:visited {
     color: #797979;
 }

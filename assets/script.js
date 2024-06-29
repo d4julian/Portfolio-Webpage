@@ -16,7 +16,7 @@ const sql = new Date(2019, 7, 1);
 const cpp = new Date(2022, 8, 1);
 const birthday = new Date(2003, 1, 18);
 const currentDate = new Date();
-const list = document.createElement("ul");
+let languagesString = "\n";
 const languages = {
     Java: java,
     SQL: sql,
@@ -41,34 +41,45 @@ for (key in languages) {
     let text;
     switch (years) {
         case 0:
-            text = months + " " + (months != 1 ? "months" : "month");
+            text = `${months} ${(months != 1 ? "months" : "month")}`
             break;
         default:
             text = years + " " + (years != 1 ? "years" : "year");
             if (months > 0) text += " and " + (months != 1 ? months + " months" : "a month");
             break;
     }
-    const li = document.createElement("li");
-    const p = document.createElement("p");
-    p.innerText = key + ": " + text;
-    li.appendChild(p);
-    list.appendChild(li);
+    languagesString += `* ${key}: ${text}\n`;
+}
+languagesString.trimEnd();
+
+function addActiveAttribute(textBox, div) {
+    textBox.appendChild(div);
+    setTimeout(() => div.classList.add("active"), 50);
 }
 
-function setText(div, text) {
+function setText(div, text, showLanguages = false) {
+    div.setAttribute("class", "content");
+    Array.from(div.children).forEach(child => child.setAttribute("class", "content"));
+
     let converter = new showdown.Converter();
-    let html = converter.makeHtml(text);
+    let html = converter.makeHtml((showLanguages) ? text + languagesString : text);
     div.innerHTML = html;
 
     let textBox = document.getElementById("textbox");
-    while (textBox.firstChild) textBox.removeChild(textBox.lastChild);
-    textBox.appendChild(div);
+    
+    if (textBox.firstChild) {
+        Array.from(textBox.children).forEach(child => child.classList.remove("active"));
+        setTimeout(() => {
+            while (textBox.firstChild) textBox.removeChild(textBox.lastChild);
+            addActiveAttribute(textBox, div);
+        }, 250);
+    } else addActiveAttribute(textBox, div);
 }
 
 function showSkills(div) {
-    div.setAttribute("id", "skillsText");                    
-    setText(div, skills);
-    div.appendChild(list);
+    div.setAttribute("id", "skillsText");          
+    setText(div, skills, true);
+
 }
 
 function showHome(div) {
