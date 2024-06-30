@@ -95,13 +95,13 @@ div#home {
 }
 
 
-.content {
-    opacity: 0;
+#textbox {
+    opacity: 1;
     transition: opacity 0.25s ease-in-out;
 }
 
-.content.active {
-    opacity: 1;
+#textbox.fade {
+    opacity: 0;
 }
 
 a:link, .category:link, a:visited, .category:visited {

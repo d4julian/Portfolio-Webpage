@@ -52,44 +52,32 @@ for (key in languages) {
 }
 languagesString.trimEnd();
 
-function addActiveAttribute(textBox, div) {
-    textBox.appendChild(div);
-    setTimeout(() => div.classList.add("active"), 50);
-}
-
-function setText(div, text, showLanguages = false) {
-    div.setAttribute("class", "content");
-    Array.from(div.children).forEach(child => child.setAttribute("class", "content"));
+function setText(text, showLanguages = false) {
 
     let converter = new showdown.Converter();
     let html = converter.makeHtml((showLanguages) ? text + languagesString : text);
-    div.innerHTML = html;
 
-    let textBox = document.getElementById("textbox");
-    
-    if (textBox.firstChild) {
-        Array.from(textBox.children).forEach(child => child.classList.remove("active"));
-        setTimeout(() => {
-            while (textBox.firstChild) textBox.removeChild(textBox.lastChild);
-            addActiveAttribute(textBox, div);
-        }, 250);
-    } else addActiveAttribute(textBox, div);
+    const textBox = document.getElementById("textbox");
+    while (textBox.firstChild) textBox.removeChild(textBox.lastChild);
+    textBox.classList.add("fade");
+
+    setTimeout(() => {
+        textBox.innerHTML = html;
+        textBox.classList.remove("fade");
+      }, 250);
 }
 
-function showSkills(div) {
-    div.setAttribute("id", "skillsText");          
-    setText(div, skills, true);
+function showSkills() {
+    setText(skills, true);
 
 }
 
-function showHome(div) {
-    div.setAttribute("id", "homeText");
-    setText(div, home);
+function showHome() {
+    setText(home);
 }
 
-function showProjects(div) {
-    div.setAttribute("id", "homeProjects");
-    setText(div, projects);
+function showProjects() {
+    setText(projects);
 }
 
 const categories = document.getElementById("categories").children;
@@ -270,4 +258,4 @@ function draw() {
 window.addEventListener('load', init);
 window.addEventListener('resize', init);
 
-showHome(document.createElement("div"));
+showHome();
