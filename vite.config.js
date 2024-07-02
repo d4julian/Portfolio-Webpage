@@ -1,7 +1,12 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  build: {
-    outDir: 'dist'
-  }
+    root: '.',
+
+    build: {
+        assetsDir: "assets",
+        outDir: 'dist',
+        "predeploy" : "npm run build",
+        "deploy" : "gh-pages -d dist",
+    }
 });
