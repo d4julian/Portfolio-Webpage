@@ -5,7 +5,7 @@ export default defineConfig({
 
     build: {
         assetsDir: "assets",
-        outDir: 'dist',
+        outDir: 'docs',
         "predeploy" : "npm run build",
         "deploy" : "gh-pages -d dist",
     }
