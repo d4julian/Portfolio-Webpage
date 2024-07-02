@@ -11,11 +11,13 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "vite": "^5.3.2",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "marked": "^13.0.1",
-    "showdown": "^2.1.0"
+    "showdown": "^2.1.0",
+    "three": "^0.166.0"
   }
 }
