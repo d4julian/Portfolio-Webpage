@@ -60,6 +60,7 @@ h1.splash, p.splash {
 h1.splash {
     flex: 1.1;
     text-align: right;
+    font-size: 28px;
 }
 
 p.splash {
@@ -68,7 +69,7 @@ p.splash {
     cursor: pointer;
     animation: blinker 2s linear infinite;
     position: relative;
-    top: 25%;
+    top: 35%;
 }
 
 @keyframes blinker {

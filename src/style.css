@@ -21,7 +21,7 @@ body {
     touch-action: none;
 }
 
-code {
+code, h1.splash {
     font-family: "Source Code Pro", sans-serif;
 }
 
@@ -112,7 +112,7 @@ a:hover, .category:hover {
     }
 
     h1.splash {
-        font-size: 17px;
+        font-size: 14px;
     }
     p.splash {
         font-size: 12px;
