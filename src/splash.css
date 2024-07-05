@@ -66,13 +66,13 @@ p.splash {
     flex: 1;
     font-family: 'Press Start 2P', sans-serif;
     cursor: pointer;
-    animation: blinker 5s linear infinite;
+    animation: blinker 2s linear infinite;
     position: relative;
     top: 25%;
 }
 
 @keyframes blinker {
     50% {
-      opacity: 0;
+      opacity: 0.3;
     }
 }
