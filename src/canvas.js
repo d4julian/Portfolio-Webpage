@@ -27,8 +27,8 @@ const materials = [], vertices = [];
 const textureLoader = new THREE.TextureLoader();
 
 const assignSRGB = texture => texture.colorSpace = THREE.SRGBColorSpace;
-let sprite = textureLoader.load("/Portfolio-Webpage/sp2.png", assignSRGB);
-let sprite3 = textureLoader.load("/Portfolio-Webpage/sp3.png", assignSRGB);
+let sprite = textureLoader.load("/sp2.png", assignSRGB);
+let sprite3 = textureLoader.load("/sp3.png", assignSRGB);
 
 for (let i = 0; i < 10000; i++) {
     const x = Math.random() * 2000 - 1000;
