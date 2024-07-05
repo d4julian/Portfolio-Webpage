@@ -4,7 +4,7 @@ export default defineConfig({
     base: '/Portfolio-Webpage/',
 
     build: {
-        outDir: 'docs',
+        outDir: 'dist',
         "predeploy" : "npm run build",
         "deploy" : "gh-pages -d dist",
     }

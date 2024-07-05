@@ -1,15 +1,25 @@
 import * as THREE from 'three';
+import isSplash from './splash';
+import { isMobile } from './script';
 
 let mouseX = 0, mouseY = 0;
 
 const scene = new THREE.Scene();
+export function getScene() { return scene; }
 const canvas = document.getElementById("three-canvas");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000);
 camera.position.z = 300;
+
+const wireframe = new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(isMobile() ? window.innerWidth / 6 : window.innerWidth / 12, 4));
+export const line = new THREE.LineSegments(wireframe);
+line.material.transparent = true;
+camera.lookAt(line.position);
+scene.add(line);
+
 
 const geometry = new THREE.BufferGeometry();
 const materials = [], vertices = [];
@@ -46,7 +56,8 @@ for (let i = 0; i < parameters.length; i++) {
         size: size, 
         map: sprite, 
         blending: THREE.AdditiveBlending,
-        transparent: true 
+        transparent: true,
+        alphaTest: 0.1
     });
     materials[i].color.setHex(color, THREE.SRGBColorSpace);
 
@@ -66,11 +77,25 @@ let halfHeight = window.innerHeight / 2, halfWidth = window.innerWidth / 2;
 function onResize() {
     halfHeight = window.innerHeight / 2, halfWidth = window.innerWidth / 2;
 
-    camera.aspect = window.innerHeight / window.innerWidth;
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+export function fadeWireframe() {
+    const material = line.material;
+    const startOpacity = material.opacity;
+    const startTime = Date.now();
+    function animate() {
+        const currentTime = Date.now();  // Use Date.now() here as well
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / 250, 1);
+
+        material.opacity = startOpacity * (1 - progress);
+        if (progress < 1) requestAnimationFrame(animate);
+    }
+    animate();
+}
 
 function onPointerMove(event) {
     if (event.isPrimary === false) return;
@@ -84,13 +109,15 @@ function getAge(currentDate) {
 }
 
 function animate() {
+    
     const date = Date.now();
     document.getElementById("age").innerText = `${getAge(date)} year old developer`;
     const time = date * 0.0001;
 
-    camera.position.x += (-mouseX - camera.position.x) * 0.01;
-    camera.position.y += (mouseY - camera.position.y) * 0.01;
-    camera.lookAt(0, 0, 0);
+    const sensitivity = isSplash() ? 0.1 : 0.01
+    camera.position.x += (-mouseX - camera.position.x) * sensitivity;
+    camera.position.y += (mouseY - camera.position.y) * sensitivity;
+    camera.lookAt(line.position);
 
     for (let i = 0; i < scene.children.length; i ++) {
         const object = scene.children[ i ];
@@ -101,7 +128,6 @@ function animate() {
         const h = (360 * (color[ 0 ] + time) % 360) / 360;
         materials[i].color.setHSL(h, color[1], color[2], THREE.SRGBColorSpace);
     }
-
 
     renderer.render(scene, camera);
 }
