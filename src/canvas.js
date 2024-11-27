@@ -18,7 +18,7 @@ const wireframe = new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(isMo
 export const line = new THREE.LineSegments(wireframe);
 line.material.transparent = true;
 camera.lookAt(line.position);
-scene.add(line);
+//scene.add(line);
 
 
 const geometry = new THREE.BufferGeometry();
